@@ -2,28 +2,28 @@
 
 #include<stdio.h>
 
-void inputArray(int[]);
-void displayArray(int[]);
+void inputArray(int[], int);
+void displayArray(int[], int);
 void evenOdd(int[]);
 
 void main(){
 
     int arr[7];
-    inputArray(arr);
-    displayArray(arr);
+    inputArray(arr,7);
+    displayArray(arr,7);
     evenOdd(arr);
 }
 
-void inputArray(int arr[]){
-    for(int i=0; i<7; i++){
+void inputArray(int arr[], int len){
+    for(int i=0; i<len; i++){
         printf("Enter array element %d: ", i+1);
         scanf("%d", &arr[i]);
     }
 }
 
-void displayArray(int arr[]){
+void displayArray(int arr[], int len){
     printf("[ ");
-    for(int i=0; i<7; i++){
+    for(int i=0; i<len; i++){
         printf("%d, ", arr[i]);
     }
     printf("\b\b ]");
@@ -47,13 +47,9 @@ void evenOdd(int arr[]){
         }
     }
 
-    printf("\n\nEven -> [ ");
-    for(int i=0; i<j; i++)
-        printf("%d, ", even[i]);
-    printf("\b\b ]");
+    printf("\n\nEven -> ");
+    displayArray(even,j);
 
-    printf("\n\nOdd -> [ ");
-    for(int i=0; i<k; i++)
-        printf("%d, ", odd[i]);
-    printf("\b\b ]");
+    printf("\n\nOdd -> ");
+    displayArray(odd,k);
 }

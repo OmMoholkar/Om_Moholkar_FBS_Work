@@ -6,38 +6,38 @@
 
 #include<stdio.h>
 
-void inputArray(int[]);
-void displayArray(int[]);
+void inputArray(int[], int);
+void displayArray(int[], int);
 void sumArray(int[], int[]);
 
 void main(){
     int arr[5];
     int brr[5];
 
-    inputArray(arr);
+    inputArray(arr,5);
     printf("\n");
-    inputArray(brr);
+    inputArray(brr,5);
 
     printf("\nArray 1 -> ");
-    displayArray(arr);
+    displayArray(arr,5);
 
     printf("\nArray 2 -> ");
-    displayArray(brr);
+    displayArray(brr,5);
 
     sumArray(arr,brr);
 
 }
 
-void inputArray(int arr[]){
-    for(int i=0; i<5; i++){
+void inputArray(int arr[], int len){
+    for(int i=0; i<len; i++){
         printf("Enter array element %d: ", i+1);
         scanf("%d", &arr[i]);
     }
 }
 
-void displayArray(int arr[]){
+void displayArray(int arr[], int len){
     printf("[ ");
-    for(int i=0; i<5; i++){
+    for(int i=0; i<len; i++){
         printf("%d, ", arr[i]);
     }
     printf("\b\b ]");
@@ -49,5 +49,5 @@ void sumArray(int arr[], int brr[]){
         crr[i] = arr[i]+brr[i];
     
     printf("\nAdded Array 3 -> ");
-    displayArray(crr);
+    displayArray(crr,5);
 }

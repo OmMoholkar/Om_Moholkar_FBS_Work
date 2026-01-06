@@ -2,31 +2,31 @@
 
 #include<stdio.h>
 
-void inputArray(int[]);
-void displayArray(int[]);
+void inputArray(int[], int);
+void displayArray(int[], int);
 void swap(int* , int*);
 void reverse(int[]);
 
 void main(){
     int arr[7];
-    inputArray(arr);
+    inputArray(arr,7);
     printf("\nOriginal array -> ");
-    displayArray(arr);
+    displayArray(arr,7);
     reverse(arr);
     printf("\nReversed array -> ");
-    displayArray(arr);
+    displayArray(arr,7);
 }
 
-void inputArray(int arr[]){
-    for(int i=0; i<7; i++){
+void inputArray(int arr[], int len){
+    for(int i=0; i<len; i++){
         printf("Enter array element %d: ", i+1);
         scanf("%d", &arr[i]);
     }
 }
 
-void displayArray(int arr[]){
+void displayArray(int arr[], int len){
     printf("[ ");
-    for(int i=0; i<7; i++){
+    for(int i=0; i<len; i++){
         printf("%d, ", arr[i]);
     }
     printf("\b\b ]");
