@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Demo Page</title>
+</head>
+<body>
+    <h1> Heading 1 </h1>
+    <h2> Heading 2 </h2>
+    <h3> Heading 3 </h3>
+    <h4> Heading 4 </h4>
+    <h5> Heading 5 </h5>
+    <h6> Heading 6 </h6>
+    This is some <b>Bold HTML</b> text. <br>
+    This is <i> Italic HTML </i> text. <br>
+    This is <u>Underlinded HTML</u> text. <br>
+
+    <h1> Paragraph </h1>
+    <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eveniet, exercitationem non nisi laborum nostrum ut saepe a excepturi, expedita in id, necessitatibus aperiam? Expedita eius itaque alias, illum voluptates laboriosam ex nesciunt, error, facilis non optio porro beatae sunt perferendis quisquam saepe obcaecati fugit nobis totam impedit? Laboriosam, fugiat omnis dolore asperiores perferendis consectetur odio repudiandae tempora, dolor cumque illum eos neque quidem facere, et repellat doloribus consequuntur. Necessitatibus corrupti reiciendis aspernatur eaque, provident, quo libero unde architecto fugiat distinctio, atque dolores vitae repellat minus esse ipsa! Expedita veritatis culpa incidunt, dicta corrupti molestiae facere vel inventore et, praesentium laborum iure. Sint provident voluptate molestiae recusandae, voluptatum libero harum blanditiis, autem corrupti pariatur dolorum ullam illo nisi reiciendis, cupiditate iste ratione. Cumque hic ipsa ipsam placeat id deserunt nobis ex ratione et quam iusto, corrupti soluta. Error exercitationem molestiae temporibus dolore dicta. Aliquam amet repellat ipsam tempore atque nostrum et voluptatem officiis, officia corrupti saepe quibusdam possimus impedit dolorum rem ipsum veniam incidunt quam voluptas libero pariatur. Suscipit accusamus at quam cupiditate illum totam, repudiandae, similique recusandae ipsa voluptatibus alias, hic sit facilis vel voluptates reiciendis amet. Cumque reprehenderit consequatur eius ex tenetur, ab illo libero. Necessitatibus optio alias aut.
+    </p><br>
+    <h1> Preformatted Text </h1>
+    <pre>
+        void main(){
+     
+     int num,rem;
+     int sum = 0, rev = 0, ams = 0;
+     printf("Enter Number: ");
+     scanf("%d", &num);
+     int temp = num;
+     
+     while (num>0){
+           
+           rem = num%10; //peeking the last digit
+           sum = sum + rem; //Sum of all digits
+           rev = rev*10+rem; //reverse of given num
+           ams = ams+rem*rem*rem; //Amstrong check
+           num = num/10; //popping the last digit
+           
+     }
+     
+     printf("Sum of all digits: %d\n", sum);
+     printf("Reversed Number: %d\n", rev);
+     (temp==rev)? printf("Palindrome\n") : printf("Not palindrome\n");
+     (temp==ams)? printf("Amstrong\n") : printf("Not Amstrong\n");
+     
+     getch();
+}
+    </pre>
+    
+</body>
+</html>
