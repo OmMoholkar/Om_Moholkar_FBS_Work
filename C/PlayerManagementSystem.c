@@ -18,6 +18,7 @@ int searchJersey(Player* players, int *size);
 void displayPlayer(Player *players, int index);
 int playerExists(Player *players, int size, int jersy);
 int* searchName(Player *players, int *sizeAdd);
+Player* removePlayer(Player *players, int *size);
 
 void main(){
 
@@ -51,7 +52,7 @@ void main(){
                 break;
 
             case 2:
-                // removePlayer();
+                removePlayer(players, &size);
                 break;
 
             case 3:
@@ -127,13 +128,30 @@ int playerExists(Player *players, int size, int jersy){ //checks for uniqueness 
     return 0;
 }
 
+Player* removePlayer(Player *players, int *size){
+    int index = searchJersey(players, size);
+    if(playerExists(players,*size,players[index].jersy)){
+        displayPlayer(players,index);
+        printf("\nPlayer removed\n");
+        for(int i=index; i<*size-1; i++){
+            players[i] = players[i+1];
+        }
+        Player *temp = realloc(players, (*size - 1) * sizeof(Player));
+        players = temp;
+        (*size)--;
+    }
+    else
+        printf("\nPlayer Not Found\n");
+    return players;
+}
+
 void searchPlayer(Player *players, int *sizeAdd){
     while(1){
         int choice;
         printf("\nSearch By: ");
         printf("\n1. Jesrey No ");
         printf("\n2. Name ");  
-        printf("\n3. Back <- ");
+        printf("\n3. <- Back ");
         printf("\nEnter Choice: ");
         scanf("%d", &choice);
         int index = -1;
@@ -144,7 +162,7 @@ void searchPlayer(Player *players, int *sizeAdd){
             if(index!=-1)
                 displayPlayer(players, index);
             else
-                printf("\nPlayer Not Found");
+                printf("\nPlayer Not Found\n");
             break;
         }
         case 2:{
@@ -176,6 +194,7 @@ int searchJersey(Player* players, int *sizeAdd){
         if(players[i].jersy==jersyNo)
             return i;
     }
+    return -1;
 }
 
 int* searchName(Player *players, int *sizeAdd){
