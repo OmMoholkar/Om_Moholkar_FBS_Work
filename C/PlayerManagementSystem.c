@@ -19,6 +19,7 @@ void displayPlayer(Player *players, int index);
 int playerExists(Player *players, int size, int jersy);
 int* searchName(Player *players, int *sizeAdd);
 Player* removePlayer(Player *players, int *size);
+Player* updatePlayer(Player *players, int *size);
 
 void main(){
 
@@ -60,7 +61,7 @@ void main(){
                 break;
 
             case 4:
-                // updatePlayer();
+                updatePlayer(players, &size);
                 break;
 
             case 5:
@@ -139,6 +140,43 @@ Player* removePlayer(Player *players, int *size){
         Player *temp = realloc(players, (*size - 1) * sizeof(Player));
         players = temp;
         (*size)--;
+    }
+    else
+        printf("\nPlayer Not Found\n");
+    return players;
+}
+
+Player* updatePlayer(Player *players, int *size){
+    int index = searchJersey(players, size);
+    if(playerExists(players,*size,players[index].jersy)){
+        displayPlayer(players,index);
+        int choice;
+        while(1){
+            printf("\nWhat do you want to update?");
+            printf("\n1. Runs");
+            printf("\n2. Wickets");
+            printf("\n3. Matches");
+            printf("\nEnter Choice: ");
+            scanf("%d", &choice);
+            switch(choice){
+                case 1:
+                    printf("\nEnter New Runs: ");
+                    scanf("%d", &players[index].runs);
+                    break;
+                case 2:
+                    printf("\nEnter New Wickets: ");
+                    scanf("%d", &players[index].wickets);
+                    break;
+                case 3:
+                    printf("\nEnter New Matches: ");
+                    scanf("%d", &players[index].matches);
+                    break;
+                case 4: 
+                    return players;
+                default:
+                    printf("\nInvalid Choice");
+            }
+        }
     }
     else
         printf("\nPlayer Not Found\n");
