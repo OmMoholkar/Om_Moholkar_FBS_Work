@@ -49,7 +49,7 @@ void main(){
 
         switch(choice){
             case 1:
-                players = addPlayer(players, &size);
+                addPlayer(players, &size);
                 break;
 
             case 2:
@@ -81,7 +81,7 @@ void main(){
                 return;
 
             default:
-                printf("Invalid choice!\n");
+                printf("\nInvalid choice!\n");
         }
     }
 }
@@ -133,13 +133,18 @@ Player* removePlayer(Player *players, int *size){
     int index = searchJersey(players, size);
     if(playerExists(players,*size,players[index].jersy)){
         displayPlayer(players,index);
-        printf("\nPlayer removed\n");
-        for(int i=index; i<*size-1; i++){
-            players[i] = players[i+1];
-        }
-        Player *temp = realloc(players, (*size - 1) * sizeof(Player));
-        players = temp;
-        (*size)--;
+        char decision;
+        printf("\n\nAre you sure you want to remove this player ? (y/n): ");
+        scanf(" %c", &decision);
+        if(decision == 'y'){
+            printf("\nPlayer removed\n");
+            for(int i=index; i<*size-1; i++){
+                players[i] = players[i+1];
+            }
+            Player *temp = realloc(players, (*size - 1) * sizeof(Player));
+            players = temp;
+            (*size)--;
+        } 
     }
     else
         printf("\nPlayer Not Found\n");
@@ -156,6 +161,7 @@ Player* updatePlayer(Player *players, int *size){
             printf("\n1. Runs");
             printf("\n2. Wickets");
             printf("\n3. Matches");
+            printf("\n4. <- Back");
             printf("\nEnter Choice: ");
             scanf("%d", &choice);
             switch(choice){
