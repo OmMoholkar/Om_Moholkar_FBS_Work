@@ -17,9 +17,12 @@ void searchPlayer(Player *players, int *size);
 int searchJersey(Player* players, int *size);
 void displayPlayer(Player *players, int index);
 int playerExists(Player *players, int size, int jersy);
-int searchName(Player *players, int *sizeAdd, Player *results);
+void searchName(Player *players, int *sizeAdd);
 Player* removePlayer(Player *players, int *size);
 Player* updatePlayer(Player *players, int *size);
+void sort(Player *players, int *size, int flag);
+Player* sortPlayers(Player *players, int *size);
+void swap(Player *a, Player *b);
 
 void main(){
 
@@ -74,7 +77,7 @@ void main(){
                 break;
 
             case 6:
-                // sortPlayers();
+                sortPlayers(players, &size);
                 break;
 
             case 7:
@@ -223,13 +226,7 @@ void searchPlayer(Player *players, int *sizeAdd){
             break;
         }
         case 2:{
-            Player *results = malloc(*sizeAdd * sizeof(Player));
-            int resSize = searchName(players, sizeAdd, results);
-            if(resSize > 0)
-                displayAll(results, resSize);
-            else
-                printf("\nPlayer Not found\n");
-            free(results);
+            searchName(players, sizeAdd);
             break;
         }
         case 3:
@@ -251,9 +248,10 @@ int searchJersey(Player* players, int *sizeAdd){
     return -1;
 }
 
-int searchName(Player *players, int *sizeAdd, Player *results){
+void searchName(Player *players, int *sizeAdd){
     int pos = 0;
     char name[40];
+    Player *results = malloc(*sizeAdd * sizeof(Player));
     printf("Enter Player Name: ");
     scanf(" %39[^\n]", name);
     for(int i=0; i<*sizeAdd; i++){
@@ -261,7 +259,11 @@ int searchName(Player *players, int *sizeAdd, Player *results){
             results[pos++] = players[i];
         }
     }
-    return pos;
+    if(pos > 0)
+        displayAll(results, pos);
+    else
+        printf("\nPlayer Not found\n");
+    free(results);
 }
 
 Player* sortPlayers(Player *players, int *size){
@@ -281,10 +283,13 @@ Player* sortPlayers(Player *players, int *size){
 
         switch(choice){
             case 1:
+                sort(players, size, 1);
                 break;
             case 2:
+                sort(players, size, 2);
                 break;
             case 3:
+                sort(players, size, 3);
                 break;
             case 4:
                 return players;
@@ -292,6 +297,63 @@ Player* sortPlayers(Player *players, int *size){
                 printf("\nInvalid Choice\n");
         }
     }
+}
+
+void sort(Player *players, int *size, int flag){
+    Player *result = malloc(*size * sizeof(Player));
+    result = players;
+    int choice;
+    printf("\nOrder: ");
+    printf("\n1. Ascending");
+    printf("\n2. Descending");
+    printf("\nEnter choice: ");
+        if(scanf("%d", &choice) != 1){  //Check for int input
+            printf("\nInvalid input! Enter a number only.\n");
+            while(getchar() != '\n');  // clear buffer
+        }
+    for(int i=0; i<*size; i++){
+        for(int j=i+1; j<*size; j++){
+            if(choice == 1){
+                switch(flag){
+                case 1:
+                    if(result[i].runs>result[j].runs)
+                        swap(&result[i], &result[j]);
+                    break;
+                case 2:
+                    if(result[i].wickets>result[j].wickets)
+                        swap(&result[i], &result[j]);
+                    break;
+                case 3:
+                    if(result[i].matches>result[j].matches)
+                        swap(&result[i], &result[j]);
+                    break;
+                }
+            }
+            else{
+                switch(flag){
+                case 1:
+                    if(result[i].runs<result[j].runs)
+                        swap(&result[i], &result[j]);
+                    break;
+                case 2:
+                    if(result[i].wickets<result[j].wickets)
+                        swap(&result[i], &result[j]);
+                    break;
+                case 3:
+                    if(result[i].matches<result[j].matches)
+                        swap(&result[i], &result[j]);
+                    break;
+                }
+            }
+        }
+    }
+    displayAll(result, *size);
+}
+
+void swap(Player *a, Player *b){
+    Player temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 // make new array for sorted players and use displayAll to print them.
