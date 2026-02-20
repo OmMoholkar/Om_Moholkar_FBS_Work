@@ -17,7 +17,7 @@ void searchPlayer(Player *players, int *size);
 int searchJersey(Player* players, int *size);
 void displayPlayer(Player *players, int index);
 int playerExists(Player *players, int size, int jersy);
-int* searchName(Player *players, int *sizeAdd);
+int searchName(Player *players, int *sizeAdd, Player *results);
 Player* removePlayer(Player *players, int *size);
 Player* updatePlayer(Player *players, int *size);
 
@@ -45,7 +45,12 @@ void main(){
         printf("\n7. Display All Players");
         printf("\n8. Exit");
         printf("\nEnter Choice: ");
-        scanf("%d", &choice);
+        // scanf("%d", &choice);
+        if(scanf("%d", &choice) != 1){
+            printf("\nInvalid input! Enter a number only.\n");
+            while(getchar() != '\n');  // clear buffer
+            continue;
+        }
 
         switch(choice){
             case 1:
@@ -163,7 +168,11 @@ Player* updatePlayer(Player *players, int *size){
             printf("\n3. Matches");
             printf("\n4. <- Back");
             printf("\nEnter Choice: ");
-            scanf("%d", &choice);
+            if(scanf("%d", &choice) != 1){
+                printf("\nInvalid input! Enter a number only.\n");
+                while(getchar() != '\n');  // clear buffer
+                continue;
+            }   
             switch(choice){
                 case 1:
                     printf("\nEnter New Runs: ");
@@ -197,7 +206,11 @@ void searchPlayer(Player *players, int *sizeAdd){
         printf("\n2. Name ");  
         printf("\n3. <- Back ");
         printf("\nEnter Choice: ");
-        scanf("%d", &choice);
+        if(scanf("%d", &choice) != 1){
+            printf("\nInvalid input! Enter a number only.\n");
+            while(getchar() != '\n');  // clear buffer
+            continue;
+        }
         int index = -1;
         switch (choice)
         {
@@ -210,16 +223,13 @@ void searchPlayer(Player *players, int *sizeAdd){
             break;
         }
         case 2:{
-            int* results = searchName(players, sizeAdd);
-            if(results[0]!=-1){
-                int i=0;
-                while(results[i]!=-1){
-                    displayPlayer(players, results[i]);
-                    i++;
-                }
-            }
+            Player *results = malloc(*sizeAdd * sizeof(Player));
+            int resSize = searchName(players, sizeAdd, results);
+            if(resSize > 0)
+                displayAll(results, resSize);
             else
                 printf("\nPlayer Not found\n");
+            free(results);
             break;
         }
         case 3:
@@ -241,48 +251,93 @@ int searchJersey(Player* players, int *sizeAdd){
     return -1;
 }
 
-int* searchName(Player *players, int *sizeAdd){
-    int* results = malloc(*sizeAdd * sizeof(int));
+int searchName(Player *players, int *sizeAdd, Player *results){
     int pos = 0;
     char name[40];
     printf("Enter Player Name: ");
     scanf(" %39[^\n]", name);
     for(int i=0; i<*sizeAdd; i++){
         if(strstr(players[i].name, name) != NULL){
-            results[pos++] = i;
+            results[pos++] = players[i];
         }
     }
-    results[pos] = -1;
-    return results;
+    return pos;
+}
+
+Player* sortPlayers(Player *players, int *size){
+    while(1){
+        int choice;
+        printf("\n Sort By");
+        printf("\n1. Runs");
+        printf("\n2. Wickets");
+        printf("\n3. Matches");
+        printf("\n4. <- Back");
+        printf("\nEnter choice: ");
+        if(scanf("%d", &choice) != 1){  //Check for int input
+            printf("\nInvalid input! Enter a number only.\n");
+            while(getchar() != '\n');  // clear buffer
+            continue;
+        }
+
+        switch(choice){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                return players;
+            default:
+                printf("\nInvalid Choice\n");
+        }
+    }
 }
 
 // make new array for sorted players and use displayAll to print them.
 
-void displayPlayer(Player *players, int index){  
-    printf("\n------------------------");
-    printf("\nJersey  : %d", players[index].jersy);
-    printf("\nName    : %s", players[index].name);
-    printf("\nRuns    : %d", players[index].runs);
-    printf("\nWickets : %d", players[index].wickets);
-    printf("\nMatches : %d\n", players[index].matches);
+void displayPlayer(Player *players, int index){
+
+    printf("\n================================================================================\n");
+    printf("| %-8s | %-20s | %-8s | %-8s | %-8s |\n",
+           "Jersey", "Name", "Runs", "Wickets", "Matches");
+    printf("================================================================================\n");
+
+    printf("| %-8d | %-20s | %-8d | %-8d | %-8d |\n",
+           players[index].jersy,
+           players[index].name,
+           players[index].runs,
+           players[index].wickets,
+           players[index].matches);
+
+    printf("================================================================================\n");
 }
 
-void displayAll(Player *players, int size){  //Change this into tabular form
+
+void displayAll(Player *players, int size){
 
     if(size == 0){
-        printf("No players available.\n");
+        printf("\nNo players available.\n");
         return;
     }
 
+    printf("\n================================================================================\n");
+    printf("| %-8s | %-20s | %-8s | %-8s | %-8s |\n",
+           "Jersey", "Name", "Runs", "Wickets", "Matches");
+    printf("================================================================================\n");
+
     for(int i = 0; i < size; i++){
-        printf("\n------------------------");
-        printf("\nJersey  : %d", players[i].jersy);
-        printf("\nName    : %s", players[i].name);
-        printf("\nRuns    : %d", players[i].runs);
-        printf("\nWickets : %d", players[i].wickets);
-        printf("\nMatches : %d\n", players[i].matches);
+        printf("| %-8d | %-20s | %-8d | %-8d | %-8d |\n",
+               players[i].jersy,
+               players[i].name,
+               players[i].runs,
+               players[i].wickets,
+               players[i].matches);
     }
+
+    printf("================================================================================\n");
 }
+
 
 void prefetch(Player *players){
 
