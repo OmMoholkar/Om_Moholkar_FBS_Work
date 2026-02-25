@@ -20,9 +20,10 @@ int playerExists(Player *players, int size, int jersy);
 void searchName(Player *players, int *sizeAdd);
 Player* removePlayer(Player *players, int *size);
 Player* updatePlayer(Player *players, int *size);
-void sort(Player *players, int *size, int flag);
+Player* sort(Player *players, int *size, int flag);
 Player* sortPlayers(Player *players, int *size);
 void swap(Player *a, Player *b);
+void topThree(Player *players, int *size);
 
 void main(){
 
@@ -73,7 +74,7 @@ void main(){
                 break;
 
             case 5:
-                // topThree();
+                topThree(players, &size);
                 break;
 
             case 6:
@@ -269,7 +270,7 @@ void searchName(Player *players, int *sizeAdd){
 Player* sortPlayers(Player *players, int *size){
     while(1){
         int choice;
-        printf("\n Sort By");
+        printf("\nSort By");
         printf("\n1. Runs");
         printf("\n2. Wickets");
         printf("\n3. Matches");
@@ -282,15 +283,21 @@ Player* sortPlayers(Player *players, int *size){
         }
 
         switch(choice){
-            case 1:
-                sort(players, size, 1);
+            case 1:{
+                Player *res = sort(players, size, 1);
+                displayAll(res,*size);
                 break;
-            case 2:
-                sort(players, size, 2);
+            }
+            case 2:{
+                Player *res = sort(players, size, 2);
+                displayAll(res,*size);
                 break;
-            case 3:
-                sort(players, size, 3);
+            }
+            case 3:{
+                Player *res = sort(players, size, 3);
+                displayAll(res,*size);
                 break;
+            }
             case 4:
                 return players;
             default:
@@ -299,7 +306,7 @@ Player* sortPlayers(Player *players, int *size){
     }
 }
 
-void sort(Player *players, int *size, int flag){
+Player* sort(Player *players, int *size, int flag){
     Player *result = malloc(*size * sizeof(Player));
     result = players;
     int choice;
@@ -347,7 +354,8 @@ void sort(Player *players, int *size, int flag){
             }
         }
     }
-    displayAll(result, *size);
+    return result;
+    free(result);
 }
 
 void swap(Player *a, Player *b){
@@ -356,7 +364,44 @@ void swap(Player *a, Player *b){
     *b = temp;
 }
 
-// make new array for sorted players and use displayAll to print them.
+void topThree(Player *players, int *size){
+    while(1){
+        int choice;
+        printf("\nTop 3 By");
+        printf("\n1. Runs");
+        printf("\n2. Wickets");
+        printf("\n3. Matches");
+        printf("\n4. <- Back");
+        printf("\nEnter choice: ");
+        if(scanf("%d", &choice) != 1){  //Check for int input
+            printf("\nInvalid input! Enter a number only.\n");
+            while(getchar() != '\n');  // clear buffer
+            continue;
+        }
+
+        switch(choice){
+            case 1:{
+                Player *res = sort(players, size, 1);
+                displayAll(res,3);
+                break;
+            }
+            case 2:{
+                Player *res = sort(players, size, 2);
+                displayAll(res,3);
+                break;
+            }
+            case 3:{
+                Player *res = sort(players, size, 3);
+                displayAll(res,3);
+                break;
+            }
+            case 4:
+                return;
+            default:
+                printf("\nInvalid Choice\n");
+        }
+    }
+}
 
 void displayPlayer(Player *players, int index){
 
