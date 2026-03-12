@@ -1,3 +1,4 @@
 *.exe
 AdvanceJava/mysql-connector-j-9.6.0
 AdvanceJava/apache-tomcat-10.1.50
+*.class
